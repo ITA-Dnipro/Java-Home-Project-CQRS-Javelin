@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.softserveinc.ita.homeproject</groupId>
+    <artifactId>home-cqrs-javelin</artifactId>
+    <version>${revision}</version>
+    <name>home-cqrs-javelin</name>
+    <description>SoftServe Home CQRS Project</description>
+    <packaging>pom</packaging>
+
+    <modules>
+
+    </modules>
+
+    <properties>
+        <ci_revision>-SNAPSHOT</ci_revision>
+        <docker.revision>latest</docker.revision>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <revision>${revision.major}.${revision.minor}.${revision.patch}${ci_revision}</revision>
+        <revision.major>0</revision.major>
+        <revision.minor>0</revision.minor>
+        <revision.patch>1</revision.patch>
+    </properties>
+
+    <!--Dependencies properties-->
+
+    <!--Plugins properties-->
+
+    <!--Profiles section-->
+
+    <!--Dependencies managment section-->
+
+    <!--Build section
+        1)Plugin management
+
+        2)Plugin section
+    -->
+    
+</project>
