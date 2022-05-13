@@ -1,16 +1,7 @@
 dev
-## ZenHub
+## GitHub
 
-* [Main ZenHub ticket](https://app.zenhub.com/workspaces/home-project-5f7b77ff8db73a001cb17009)
-
-
-## Code reviewers
-
-- [ ] @github_username
-
-### Second Level Review
-
-- [ ] @github_username
+* [GitHub issue](https://github.com/ITA-Dnipro/Java-Home-Project-CQRS-Javelin/issues/7)
 
 ## Summary of issue
 
