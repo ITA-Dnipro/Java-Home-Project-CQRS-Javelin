@@ -1,8 +1,8 @@
-package com.softserveinc.ita.homeproject.reader.general.news;
+package com.softserveinc.ita.homeproject.reader.data.general.news;
 
 import java.time.LocalDateTime;
 
-import com.softserveinc.ita.homeproject.reader.BaseEntity;
+import com.softserveinc.ita.homeproject.reader.data.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.Document;
