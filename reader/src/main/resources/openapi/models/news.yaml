@@ -5,7 +5,8 @@ CreateNews:
     - text
   type: object
   properties:
-    title: string
+    title:
+      type: string
       example: "News in the Some Area"
       minLength: 1
       maxLength: 70
