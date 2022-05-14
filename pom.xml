@@ -12,12 +12,13 @@
     <packaging>pom</packaging>
 
     <modules>
-
+        <module>data-migration-reader</module>
     </modules>
 
     <properties>
-        <ci_revision>-SNAPSHOT</ci_revision>
-        <docker.revision>latest</docker.revision>
+        <sonar.organization>ita-dnipro</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <!--Maven properties-->
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -25,15 +26,57 @@
         <revision.major>0</revision.major>
         <revision.minor>0</revision.minor>
         <revision.patch>1</revision.patch>
+        <ci_revision>-SNAPSHOT</ci_revision>
+
+        <docker.revision>latest</docker.revision>
+
+        <!--Dependencies properties-->
+        <!--Spring dependencies versioning-->
+        <spring-boot-starter-data-mongodb.version>2.6.7</spring-boot-starter-data-mongodb.version>
+        <spring-boot-starter-test.version>2.6.7</spring-boot-starter-test.version>
+        <spring-boot-starter-web.version>2.6.7</spring-boot-starter-web.version>
+
+        <!--Other dependencies properties-->
+        <lombok.version>1.18.22</lombok.version>
+
+        <!--Plugins properties-->
     </properties>
 
-    <!--Dependencies properties-->
-
-    <!--Plugins properties-->
 
     <!--Profiles section-->
 
-    <!--Dependencies managment section-->
+    <!--Dependencies management section-->
+    <dependencyManagement>
+        <dependencies>
+            <!--Project dependencies-->
+
+            <!--Spring dependencies-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-mongodb</artifactId>
+                <version>${spring-boot-starter-data-mongodb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot-starter-test.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-starter-web.version}</version>
+            </dependency>
+
+            <!--Other dependencies -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <optional>true</optional>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <!--Build section
         1)Plugin management
