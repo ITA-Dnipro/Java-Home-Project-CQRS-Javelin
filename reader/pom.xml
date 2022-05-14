@@ -37,6 +37,14 @@
 
         <!--Other dependencies-->
         <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -67,7 +75,7 @@
                             <inputSpec>
                                 ${project.basedir}/src/main/resources/openapi/openapi.yaml
                             </inputSpec>
-                            <generatorName>spring</generatorName>
+                            <generatorName>jaxrs-spec</generatorName>
                             <generateApiTests>false</generateApiTests>
                             <generateModelTests>false</generateModelTests>
                             <configOptions>

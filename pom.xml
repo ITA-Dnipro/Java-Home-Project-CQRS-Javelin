@@ -40,6 +40,8 @@
         <jackson-annotations.version>2.12.3</jackson-annotations.version>
         <jackson-core.version>2.12.3</jackson-core.version>
         <jackson-databind.version>2.12.3</jackson-databind.version>
+        <validation-api.version>2.0.1.Final</validation-api.version>
+        <javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
         <lombok.version>1.18.22</lombok.version>
         <swagger-parser-v3.version>2.0.26</swagger-parser-v3.version>
 
@@ -74,6 +76,16 @@
             </dependency>
 
             <!--Other dependencies -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>${javax.ws.rs-api.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
