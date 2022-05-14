@@ -25,3 +25,31 @@ CreateNews:
       minLength: 1
       maxLength: 150
       example: "example of text"
+UpdateNews:
+  type: object
+  required:
+    - title
+    - description
+    - text
+  properties:
+    title:
+      type: string
+      minLength: 1
+      maxLength: 70
+      example: "example"
+    photo_url:
+      type: string
+      example: "https://miro.medium.com/max/2400/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg"
+    description:
+      type: string
+      minLength: 1
+      maxLength: 150
+      example: "example"
+    source:
+      type: string
+      example: "https://example.com"
+    text:
+      type: string
+      minLength: 1
+      maxLength: 150
+      example: "example of text"
