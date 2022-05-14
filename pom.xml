@@ -37,9 +37,14 @@
         <spring-boot-starter-web.version>2.6.7</spring-boot-starter-web.version>
 
         <!--Other dependencies properties-->
+        <jackson-annotations.version>2.12.3</jackson-annotations.version>
+        <jackson-core.version>2.12.3</jackson-core.version>
+        <jackson-databind.version>2.12.3</jackson-databind.version>
         <lombok.version>1.18.22</lombok.version>
+        <swagger-parser-v3.version>2.0.26</swagger-parser-v3.version>
 
         <!--Plugins properties-->
+        <openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
     </properties>
 
 
@@ -83,5 +88,45 @@
 
         2)Plugin section
     -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>${openapi-generator-maven-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>io.swagger.parser.v3</groupId>
+                            <artifactId>swagger-parser-v3</artifactId>
+                            <version>${swagger-parser-v3.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.fasterxml.jackson.core</groupId>
+                            <artifactId>jackson-databind</artifactId>
+                            <version>${jackson-databind.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.fasterxml.jackson.core</groupId>
+                            <artifactId>jackson-core</artifactId>
+                            <version>${jackson-core.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.fasterxml.jackson.core</groupId>
+                            <artifactId>jackson-annotations</artifactId>
+                            <version>${jackson-annotations.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     
 </project>
