@@ -36,3 +36,17 @@ InternalServerError:
     application/json:
       schema:
         $ref: '../models/common.yaml#/ApiError'
+NewsResponse:
+  description: OK
+  content:
+    application/json:
+      schema:
+        $ref: '../models/news.yaml#/ReadNews'
+NewsListResponse:
+  description: OK
+  content:
+    application/json:
+      schema:
+        type: array
+        items:
+          $ref: '../models/news.yaml#/ReadNews'
