@@ -12,7 +12,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>data-migration-reader</module>
+
     </modules>
 
     <properties>
