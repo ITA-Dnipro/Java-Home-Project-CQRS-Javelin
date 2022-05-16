@@ -1,4 +1,4 @@
-package com.softserveinc.ita.homeproject.reader.data;
+package com.softserveinc.ita.homeproject.reader.data.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

@@ -1,4 +1,4 @@
-package com.softserveinc.ita.homeproject.reader.data.general.news;
+package com.softserveinc.ita.homeproject.reader.data.entity.general.news;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
