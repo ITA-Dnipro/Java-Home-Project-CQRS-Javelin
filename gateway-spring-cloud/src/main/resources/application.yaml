@@ -1,0 +1,18 @@
+server:
+  port: ${PORT:8088}
+
+spring:
+  cloud:
+    gateway:
+      routes:
+
+        - id: reader_microservice
+#          Used environment variable for reader service access. Example: http://localhost:8085/
+          uri: ${READER_URI}
+          predicates:
+            - Method=GET
+
+        - id: writer_microservice
+          uri: ${WRITER_URI}
+          predicates:
+            - Method=POST, PUT, DELETE

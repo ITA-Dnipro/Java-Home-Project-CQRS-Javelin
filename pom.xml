@@ -32,6 +32,7 @@
         <!--Dependencies properties-->
         <!--Spring dependencies versioning-->
         <spring.boot.version>2.6.7</spring.boot.version>
+        <spring-cloud-starter-gateway.version>3.1.2</spring-cloud-starter-gateway.version>
         <spring-kafka.version>2.8.5</spring-kafka.version>
 
 
@@ -107,7 +108,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-gateway</artifactId>
-                <version>${spring.boot.version}</version>
+                <version>${spring-cloud-starter-gateway.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
