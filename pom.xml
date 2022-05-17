@@ -12,12 +12,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>data-migration-reader</module>
+
     </modules>
 
     <properties>
-        <sonar.organization>ita-dnipro</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <!--Maven properties-->
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
@@ -27,26 +25,43 @@
         <revision.minor>0</revision.minor>
         <revision.patch>1</revision.patch>
         <ci_revision>-SNAPSHOT</ci_revision>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <docker.revision>latest</docker.revision>
 
         <!--Dependencies properties-->
         <!--Spring dependencies versioning-->
-        <spring-boot-starter-data-mongodb.version>2.6.7</spring-boot-starter-data-mongodb.version>
-        <spring-boot-starter-test.version>2.6.7</spring-boot-starter-test.version>
-        <spring-boot-starter-web.version>2.6.7</spring-boot-starter-web.version>
+        <spring.boot.version>2.6.7</spring.boot.version>
+        <spring-kafka.version>2.8.5</spring-kafka.version>
+
 
         <!--Other dependencies properties-->
+        <assertj-core.version>3.16.1</assertj-core.version>
         <jackson-annotations.version>2.12.3</jackson-annotations.version>
         <jackson-core.version>2.12.3</jackson-core.version>
         <jackson-databind.version>2.12.3</jackson-databind.version>
-        <validation-api.version>2.0.1.Final</validation-api.version>
         <javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
+        <jersey-client.version>3.0.4</jersey-client.version>
+        <jersey-media-json-jackson.version>3.0.4</jersey-media-json-jackson.version>
+        <jersey-media-multipart.version>3.0.4</jersey-media-multipart.version>
+        <junit-jupiter-api.version>5.6.3</junit-jupiter-api.version>
+        <junit-jupiter-params.version>5.6.3</junit-jupiter-params.version>
         <lombok.version>1.18.22</lombok.version>
+        <mockito-core.version>3.3.3</mockito-core.version>
+        <modelMapper.version>2.4.4</modelMapper.version>
+        <postgresql.verson>42.2.16</postgresql.verson>
         <swagger-parser-v3.version>2.0.26</swagger-parser-v3.version>
+        <validation-api.version>2.0.1.Final</validation-api.version>
 
         <!--Plugins properties-->
+        <checkstyle.version>8.41</checkstyle.version>
+        <checkstyle.configLocation>
+            ${maven.multiModuleProjectDirectory}/.github/checkstyle-configuration.xml
+        </checkstyle.configLocation>
+        <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
+        <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
         <openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
+        <swagger-codegen-maven-plugin.version>3.0.26</swagger-codegen-maven-plugin.version>
     </properties>
 
 
@@ -60,22 +75,53 @@
             <!--Spring dependencies-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-mongodb</artifactId>
-                <version>${spring-boot-starter-data-mongodb.version}</version>
+                <version>${spring.boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring-boot-starter-test.version}</version>
+                <version>${spring.boot.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring-boot-starter-web.version}</version>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-webflux</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-gateway</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${spring-kafka.version}</version>
             </dependency>
 
             <!--Other dependencies -->
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj-core.version}</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
@@ -87,10 +133,57 @@
                 <version>${javax.ws.rs-api.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>${jersey-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-multipart</artifactId>
+                <version>${jersey-media-multipart.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-json-jackson</artifactId>
+                <version>${jersey-media-json-jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit-jupiter-api.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit-jupiter-params.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelMapper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.verson}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -103,6 +196,38 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven.checkstyle.plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <configLocation>${checkstyle.configLocation}</configLocation>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>validate</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>checkstyle</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>org.openapitools</groupId>
                     <artifactId>openapi-generator-maven-plugin</artifactId>
@@ -137,8 +262,50 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>io.swagger.codegen.v3</groupId>
+                    <artifactId>swagger-codegen-maven-plugin</artifactId>
+                    <version>${swagger-codegen-maven-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.fasterxml.jackson.core</groupId>
+                            <artifactId>jackson-databind</artifactId>
+                            <version>${jackson-databind.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.fasterxml.jackson.core</groupId>
+                            <artifactId>jackson-core</artifactId>
+                            <version>${jackson-core.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.fasterxml.jackson.core</groupId>
+                            <artifactId>jackson-annotations</artifactId>
+                            <version>${jackson-annotations.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <id>convert</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                            <configuration>
+                                <inputSpec>${project.build.outputDirectory}/yaml/openapi.yaml</inputSpec>
+                                <!-- Use "openapi" to convert YAML->JSON or "openapi-yaml" to convert JSON->YAML -->
+                                <language>openapi</language>
+                                <!-- Output directory, relative to the project directory. Default is ${project.build.directory}/generated-sources/swagger -->
+                                <output>${project.build.outputDirectory}/json/</output>
+                                <configOptions>
+                                    <!-- Default output file name is openapi.json or openapi.yaml -->
+                                    <outputFile>openapi.json</outputFile>
+                                </configOptions>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
-    
+
 </project>
