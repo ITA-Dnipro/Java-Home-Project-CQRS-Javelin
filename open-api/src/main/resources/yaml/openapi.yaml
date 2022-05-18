@@ -1,0 +1,20 @@
+openapi: 3.0.3
+
+info:
+  title: Java-Home-Project-CQRS-Javelin-reader
+  description: Java-Home-Project-CQRS-Javelin-reader
+  version: 1.0.0
+
+servers:
+  - url: /api/0
+
+tags:
+  - name: news
+    description: News management operations
+
+paths:
+  /news:
+    $ref: './paths/news.yaml#/news'
+
+  /news/{id}:
+    $ref: './paths/news.yaml#/news-newsId'
