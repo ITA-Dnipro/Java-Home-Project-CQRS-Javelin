@@ -9,10 +9,10 @@
     </parent>
     <groupId>com.softserveinc.ita.homeproject</groupId>
     <artifactId>gateway-spring-cloud</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>gateway-spring-cloud</name>
-    <description>gateway-spring-cloud</description>
+    <description>gateway-spring-cloud for Java-Home-Project-CQRS-Javelin</description>
     <properties>
+        <image.application.path>homeacademy/gateway-spring-cloud</image.application.path>
         <java.version>11</java.version>
     </properties>
     <dependencies>
@@ -27,9 +27,37 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib.version}</version>
+                <configuration>
+                    <to>
+<!--                        <image>${image.application.path}</image>-->
+                        <image>${image.application.path}</image>
+                        <tags>
+                            <tag>javelin${project.version}-${git_commit_sha}</tag>
+                        </tags>
+                        <auth>
+                            <username>${docker.username}</username>
+                            <password>${docker.password}</password>
+                        </auth>
+                    </to>
+                    <container>
+                        <mainClass>com.softserveinc.ita.homeproject.gatewayspringcloud.GatewaySpringCloudApplication</mainClass>
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                    </container>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>${jib.goal}</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+
         </plugins>
     </build>
 

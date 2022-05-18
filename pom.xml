@@ -17,6 +17,7 @@
 
     <properties>
         <!--Maven properties-->
+        <git_commit_sha>default</git_commit_sha>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -59,6 +60,9 @@
         <checkstyle.configLocation>
             ${maven.multiModuleProjectDirectory}/.github/checkstyle-configuration.xml
         </checkstyle.configLocation>
+        <jib.goal>dockerBuild</jib.goal>
+        <jib.version>3.2.1</jib.version>
+        <fabric8io.docker.maven.plugin.version>0.39.1</fabric8io.docker.maven.plugin.version>
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
         <openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
@@ -197,6 +201,11 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
