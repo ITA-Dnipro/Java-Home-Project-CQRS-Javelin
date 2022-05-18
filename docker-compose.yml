@@ -4,6 +4,8 @@ services:
     image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
+    networks:
+      - javelin
   kafka:
     image: wurstmeister/kafka
     ports:
@@ -12,3 +14,10 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+    networks:
+      - javelin
+networks:
+  javelin:
+    external: false
+    name: javelin
+    driver: bridge
