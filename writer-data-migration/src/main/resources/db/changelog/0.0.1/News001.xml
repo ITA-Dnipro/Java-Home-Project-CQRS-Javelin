@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="News001" author="dshte">
+        <createTable tableName="news">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true"
+                             nullable="false"
+                             primaryKeyName="news_pkey"/>
+            </column>
+            <column name="CREATE_DATE" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PHOTO_URL" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SOURCE" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TEXT" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TITLE" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATE_DATE" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="News001.sequence" author="dshte">
+        <createSequence sequenceName="hibernate_sequence"
+                        incrementBy="1"/>
+    </changeSet>
+
+</databaseChangeLog>

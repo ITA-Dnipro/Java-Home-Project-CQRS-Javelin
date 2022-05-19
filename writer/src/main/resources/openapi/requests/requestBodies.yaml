@@ -1,0 +1,12 @@
+CreateNewsBody:
+  description: A payload for creating a new News
+  content:
+    application/json:
+      schema:
+        $ref: '../models/news.yaml#/CreateNews'
+UpdateNewsBody:
+  description: A payload for updating an existing News
+  content:
+    application/json:
+      schema:
+        $ref: '../models/news.yaml#/UpdateNews'

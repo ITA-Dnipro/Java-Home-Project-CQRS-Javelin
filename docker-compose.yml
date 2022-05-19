@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 
 services:
   zookeeper:
@@ -24,6 +24,42 @@ services:
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
     depends_on:
       - zookeeper
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5433:5432
+    networks:
+      - javelin
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+  writer-data-migration:
+    depends_on:
+      postgres:
+        condition: service_healthy
+    image: homeacademy/writer-data-migration:javelin_0.0.1-SNAPSHOT
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?user=postgres&password=password
+    ports:
+      - 5001:5001
+    networks:
+      - javelin
+  writer:
+    image: homeacademy/writer:javelin_0.0.1-SNAPSHOT
+    depends_on:
+      writer-data-migration:
+        condition: service_healthy
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+    ports:
+      - 8080:8080
+    networks:
+      - javelin
 
 volumes:
   zookeeper_data:
@@ -32,6 +68,7 @@ volumes:
     driver: local
 
 networks:
-  default:
-    external:
-      name: javelin
+  javelin:
+    external: false
+    name: javelin
+    driver: bridge

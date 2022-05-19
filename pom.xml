@@ -12,7 +12,8 @@
     <packaging>pom</packaging>
 
     <modules>
-
+        <module>writer</module>
+        <module>writer-data-migration</module>
     </modules>
 
     <properties>
@@ -62,6 +63,17 @@
         <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
         <openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
         <swagger-codegen-maven-plugin.version>3.0.26</swagger-codegen-maven-plugin.version>
+        <swagger.ui.version>3.52.3</swagger.ui.version>
+        <rapidoc.version>8.4.9</rapidoc.version>
+        <redoc.version>2.0.0-rc.53</redoc.version>
+        <picocli.version>4.6.1</picocli.version>
+        <liquibase.version>4.3.1</liquibase.version>
+        <slf4j-api.version>1.7.30</slf4j-api.version>
+        <reflections.version>0.9.12</reflections.version>
+        <rsql-jpa.version>5.0.9</rsql-jpa.version>
+        <fabric8io.docker.maven.plugin.version>0.24.0</fabric8io.docker.maven.plugin.version>
+        <jib.maven.version>2.7.1</jib.maven.version>
+        <jib.goal>dockerBuild</jib.goal>
     </properties>
 
 
@@ -185,6 +197,31 @@
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.verson}</version>
             </dependency>
+            <dependency>
+                <groupId>info.picocli</groupId>
+                <artifactId>picocli</artifactId>
+                <version>${picocli.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.perplexhub</groupId>
+                <artifactId>rsql-jpa</artifactId>
+                <version>${rsql-jpa.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -196,6 +233,11 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${fabric8io.docker.maven.plugin.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -303,6 +345,12 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib.maven.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
