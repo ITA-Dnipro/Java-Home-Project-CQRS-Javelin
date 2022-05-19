@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:8087}
+  port: ${PORT:8088}
 
 spring:
   cloud:
@@ -7,7 +7,10 @@ spring:
       routes:
 
         - id: reader_microservice
-#          Used environment variable for reader service access. Example: http://localhost:8085/
+#          Used environment variable for reader service access.
+#          Example:
+#          http://localhost:8085 - for running from IDEA
+#          http://host.docker.internal:8085 - for running from Docker
           uri: ${READER_URI}
           predicates:
             - Method=GET

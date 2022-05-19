@@ -9,5 +9,4 @@ public class GatewaySpringCloudApplication {
     public static void main(String[] args) {
         SpringApplication.run(GatewaySpringCloudApplication.class, args);
     }
-
 }
