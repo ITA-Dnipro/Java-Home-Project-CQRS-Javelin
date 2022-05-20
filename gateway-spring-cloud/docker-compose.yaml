@@ -4,7 +4,14 @@ services:
   test-reader-microservice:
     image: homeacademy/test-reader-microservice
     ports:
-      - 8085:8085
+      - "8085:8085"
+    networks:
+      - javelin
+
+  test-writer-microservice:
+    image: homeacademy/test-writer-microservice
+    ports:
+      - "8086:8086"
     networks:
       - javelin
 
@@ -15,7 +22,7 @@ services:
       READER_URI: http://host.docker.internal:8085
       WRITER_URI: http://host.docker.internal:8086
     ports:
-      - 8088:8088
+      - "8088:8088"
     networks:
       - javelin
 
@@ -24,3 +31,4 @@ networks:
     external: false
     name: javelin
     driver: bridge
+
