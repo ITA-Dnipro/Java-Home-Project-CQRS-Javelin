@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>open-api</module>
         <module>gateway-spring-cloud</module>
     </modules>
 
