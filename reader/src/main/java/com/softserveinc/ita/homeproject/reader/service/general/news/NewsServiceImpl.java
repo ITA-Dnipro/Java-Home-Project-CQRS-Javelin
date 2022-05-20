@@ -1,6 +1,7 @@
 package com.softserveinc.ita.homeproject.reader.service.general.news;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.softserveinc.ita.homeproject.reader.data.entity.general.news.News;
@@ -33,11 +34,11 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public NewsDto create(NewsDto newsDto) {
         News news = mapper.convert(newsDto, News.class);
-
+        news.setId(ID_PREFIX + news.getId());
         news.setCreateDate(LocalDateTime.now());
         news.setEnabled(true);
         newsRepository.save(news);
-
+        news.setId(news.getId().substring(ID_PREFIX.length()));
         return mapper.convert(news, NewsDto.class);
     }
 
@@ -70,21 +71,27 @@ public class NewsServiceImpl implements NewsService {
 
         readNews.setUpdateDate(LocalDateTime.now());
         newsRepository.save(readNews);
+        readNews.setId(readNews.getId().substring(ID_PREFIX.length()));
 
         return mapper.convert(readNews, NewsDto.class);
     }
 
     @Override
     public NewsDto getOne(Long id) {
-        return newsRepository.findById(ID_PREFIX + id).filter(News::getEnabled)
+        NewsDto newsDto = newsRepository.findById(ID_PREFIX + id).filter(News::getEnabled)
             .map(news -> mapper.convert(news, NewsDto.class))
             .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
+        newsDto.setId(newsDto.getId().substring(ID_PREFIX.length()));
+
+        return newsDto;
     }
 
     public Page<NewsDto> findAll() {
-        return new PageImpl<>(newsRepository.findAll().stream()
+        List<NewsDto> collect = newsRepository.findAll().stream()
             .map(news -> mapper.convert(news, NewsDto.class))
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList());
+        collect.forEach(newsDto -> newsDto.setId(newsDto.getId().substring(ID_PREFIX.length())));
+        return new PageImpl<>(collect);
     }
 
     @Override

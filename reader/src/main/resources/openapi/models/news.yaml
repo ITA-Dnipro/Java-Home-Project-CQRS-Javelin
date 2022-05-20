@@ -5,6 +5,8 @@ CreateNews:
     - text
   type: object
   properties:
+    id:
+      type: integer
     title:
       type: string
       example: "News in the Some Area"
