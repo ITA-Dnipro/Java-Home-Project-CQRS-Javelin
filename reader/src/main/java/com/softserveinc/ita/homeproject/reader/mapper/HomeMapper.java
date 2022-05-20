@@ -3,7 +3,6 @@ package com.softserveinc.ita.homeproject.reader.mapper;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 
-
 import com.softserveinc.ita.homeproject.reader.mapper.config.AbstractTypeConverter;
 import com.softserveinc.ita.homeproject.reader.mapper.config.HomeMappingConfig;
 import com.softserveinc.ita.homeproject.reader.service.dto.BaseDto;
@@ -29,8 +28,6 @@ public class HomeMapper {
     @PostConstruct
     @SuppressWarnings({"unchecked cast", "rawtypes"})
     public void init() {
-        modelMapper = new ModelMapper();
-
         ConditionalConverter<Object, BaseDto> conditionalConverter =
             new AbstractTypeConverter<>(MODEL_PACKAGE, DTO_PACKAGE, (s, d) -> {
 
@@ -49,6 +46,7 @@ public class HomeMapper {
                 return destinationSimpleName.contains(sourceSimpleDomainName)
                     || sourceSimpleDomainName.contains(destinationSimpleName);
             }, (r, d) -> !r.getSubTypesOf(d).isEmpty());
+        modelMapper = new ModelMapper();
 
         modelMapper.getConfiguration().getConverters().add(0, conditionalConverter);
         modelMapper.getConfiguration().getConverters().add(0, conditionalConverter2);

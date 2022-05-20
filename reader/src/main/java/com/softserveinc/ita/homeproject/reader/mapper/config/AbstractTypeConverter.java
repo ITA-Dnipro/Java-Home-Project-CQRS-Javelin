@@ -57,6 +57,7 @@ public class AbstractTypeConverter<S, D> implements ConditionalConverter<S, D> {
             .filter(destinationSybType -> this.typeMatcher.match(sourceType, destinationSybType))
             .findFirst()
             .orElseThrow();
+
         return context.getMappingEngine().map(context.create(context.getSource(), destinationSubType));
     }
 

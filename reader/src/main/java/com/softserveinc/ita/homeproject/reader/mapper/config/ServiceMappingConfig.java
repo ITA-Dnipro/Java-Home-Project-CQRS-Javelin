@@ -5,6 +5,7 @@ import org.springframework.core.GenericTypeResolver;
 
 
 public interface ServiceMappingConfig<S, D> {
+
     void addMappings(TypeMap<S, D> typeMap);
 
     @SuppressWarnings("unchecked cast")
@@ -21,9 +22,11 @@ public interface ServiceMappingConfig<S, D> {
         Class<?>[] typeArguments =
                 GenericTypeResolver.resolveTypeArguments(this.getClass(), ServiceMappingConfig.class);
         final var expectedTypeArgumentsSize = 2;
+
         if (typeArguments == null || typeArguments.length != expectedTypeArgumentsSize) {
             throw new IllegalStateException("Something went wrong with resolving types. Try to provide it explicitly.");
         }
+
         return typeArguments;
     }
 }
