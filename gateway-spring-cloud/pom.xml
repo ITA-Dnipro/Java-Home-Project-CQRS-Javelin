@@ -2,26 +2,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>home-cqrs-javelin</artifactId>
         <groupId>com.softserveinc.ita.homeproject</groupId>
         <version>${revision}</version>
     </parent>
-    <groupId>com.softserveinc.ita.homeproject</groupId>
+
     <artifactId>gateway-spring-cloud</artifactId>
     <name>gateway-spring-cloud</name>
     <description>gateway-spring-cloud for Java-Home-Project-CQRS-Javelin</description>
+
     <properties>
         <image.application.path>homeacademy/gateway-spring-cloud</image.application.path>
-        <java.version>11</java.version>
     </properties>
-    <dependencies>
 
+    <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -29,13 +29,11 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>${jib.version}</version>
                 <configuration>
                     <to>
-<!--                        <image>${image.application.path}</image>-->
                         <image>${image.application.path}</image>
                         <tags>
-                            <tag>javelin${project.version}-${git_commit_sha}</tag>
+                            <tag>javelin-${project.version}</tag>
                         </tags>
                         <auth>
                             <username>${docker.username}</username>
@@ -57,8 +55,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
-
 </project>

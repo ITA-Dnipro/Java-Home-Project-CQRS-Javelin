@@ -31,4 +31,3 @@ networks:
     external: false
     name: javelin
     driver: bridge
-
