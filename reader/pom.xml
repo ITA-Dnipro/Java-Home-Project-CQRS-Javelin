@@ -41,8 +41,8 @@
 
         <!--Other dependencies-->
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -73,28 +73,18 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.swagger/swagger-annotations -->
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
-            <version>1.6.6</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-core -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-core</artifactId>
-            <version>3.0.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.openapitools/jackson-databind-nullable -->
         <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>jackson-databind-nullable</artifactId>
-            <version>0.2.2</version>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
-
-
-
     </dependencies>
 
     <build>
@@ -144,6 +134,52 @@
                             <addCompileSourceRoot>false</addCompileSourceRoot>
                             <output>${project.build.directory}/generated-sources/openapi</output>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <configuration>
+                    <to>
+                        <image>reader</image>
+                        <tags>
+                            <tag>javelin-${revision}</tag>
+                        </tags>
+                        <auth>
+                            <username>${env.DOCKER_USERNAME}</username>
+                            <password>${env.DOCKER_PASSWORD}</password>
+                        </auth>
+                    </to>
+                    <container>
+                        <mainClass>com.softserveinc.ita.homeproject.reader.ReaderApplication</mainClass>
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                    </container>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>buildTar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
