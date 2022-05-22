@@ -109,7 +109,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>
-                                ${project.basedir}/src/main/resources/openapi/openapi.yaml
+                                    ${maven.multiModuleProjectDirectory}/open-api/src/main/resources/yaml/openapi.yaml
                             </inputSpec>
                             <generatorName>spring</generatorName>
                             <generateApiTests>false</generateApiTests>

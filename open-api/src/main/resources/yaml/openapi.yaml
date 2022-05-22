@@ -1,8 +1,8 @@
 openapi: 3.0.3
 
 info:
-  title: Java-Home-Project-CQRS-Javelin-reader
-  description: Java-Home-Project-CQRS-Javelin-reader
+  title: Java-Home-Project-CQRS-Open-Api
+  description: Java-Home-Project-CQRS-Open-Api
   version: 1.0.0
 
 servers:

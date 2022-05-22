@@ -4,9 +4,11 @@ CreateNewsBody:
     application/json:
       schema:
         $ref: '../models/news.yaml#/CreateNews'
+  required: true
 UpdateNewsBody:
   description: A payload for updating an existing News
   content:
     application/json:
       schema:
         $ref: '../models/news.yaml#/UpdateNews'
+  required: true
