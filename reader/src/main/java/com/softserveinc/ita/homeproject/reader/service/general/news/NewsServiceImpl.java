@@ -33,47 +33,51 @@ public class NewsServiceImpl implements NewsService {
     @Override
     @Transactional
     public NewsDto create(NewsDto newsDto) {
-        News news = mapper.convert(newsDto, News.class);
-        news.setId(ID_PREFIX + news.getId());
-        news.setCreateDate(LocalDateTime.now());
-        news.setEnabled(true);
-        newsRepository.save(news);
-        news.setId(news.getId().substring(ID_PREFIX.length()));
-        return mapper.convert(news, NewsDto.class);
+        News newsToCreate = mapper.convert(newsDto, News.class);
+
+        newsToCreate.setId(ID_PREFIX + newsToCreate.getId());
+        newsToCreate.setCreateDate(LocalDateTime.now());
+        newsToCreate.setEnabled(true);
+
+        newsRepository.save(newsToCreate);
+        newsToCreate.setId(newsToCreate.getId().substring(ID_PREFIX.length()));
+
+        return mapper.convert(newsToCreate, NewsDto.class);
     }
 
     @Override
     @Transactional
     public NewsDto update(Long id, NewsDto newsDto) {
-        News readNews = newsRepository.findById(ID_PREFIX + id)
+        News newsToUpdate = newsRepository.findById(ID_PREFIX + id)
             .filter(News::getEnabled)
             .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
 
         if (newsDto.getTitle() != null) {
-            readNews.setTitle(newsDto.getTitle());
+            newsToUpdate.setTitle(newsDto.getTitle());
         }
 
         if (newsDto.getText() != null) {
-            readNews.setText(newsDto.getText());
+            newsToUpdate.setText(newsDto.getText());
         }
 
         if (newsDto.getDescription() != null) {
-            readNews.setDescription(newsDto.getDescription());
+            newsToUpdate.setDescription(newsDto.getDescription());
         }
 
         if (newsDto.getPhotoUrl() != null) {
-            readNews.setPhotoUrl(newsDto.getPhotoUrl());
+            newsToUpdate.setPhotoUrl(newsDto.getPhotoUrl());
         }
 
         if (newsDto.getSource() != null) {
-            readNews.setSource(newsDto.getSource());
+            newsToUpdate.setSource(newsDto.getSource());
         }
 
-        readNews.setUpdateDate(LocalDateTime.now());
-        newsRepository.save(readNews);
-        readNews.setId(readNews.getId().substring(ID_PREFIX.length()));
+        newsToUpdate.setUpdateDate(LocalDateTime.now());
 
-        return mapper.convert(readNews, NewsDto.class);
+        newsRepository.save(newsToUpdate);
+        newsToUpdate.setId(newsToUpdate.getId().substring(ID_PREFIX.length()));
+
+        return mapper.convert(newsToUpdate, NewsDto.class);
     }
 
     @Override
@@ -81,25 +85,28 @@ public class NewsServiceImpl implements NewsService {
         NewsDto newsDto = newsRepository.findById(ID_PREFIX + id).filter(News::getEnabled)
             .map(news -> mapper.convert(news, NewsDto.class))
             .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
+
         newsDto.setId(newsDto.getId().substring(ID_PREFIX.length()));
 
         return newsDto;
     }
 
     public Page<NewsDto> findAll() {
-        List<NewsDto> collect = newsRepository.findAll().stream()
+        List<NewsDto> allNews = newsRepository.findAll().stream()
             .map(news -> mapper.convert(news, NewsDto.class))
             .collect(Collectors.toList());
-        collect.forEach(newsDto -> newsDto.setId(newsDto.getId().substring(ID_PREFIX.length())));
-        return new PageImpl<>(collect);
+
+        allNews.forEach(newsDto -> newsDto.setId(newsDto.getId().substring(ID_PREFIX.length())));
+
+        return new PageImpl<>(allNews);
     }
 
     @Override
     public void deactivateNews(Long id) {
-        News toDelete = newsRepository.findById(ID_PREFIX + id).filter(News::getEnabled)
+        News newsToDelete = newsRepository.findById(ID_PREFIX + id).filter(News::getEnabled)
             .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
-        toDelete.setEnabled(false);
+        newsToDelete.setEnabled(false);
 
-        newsRepository.save(toDelete);
+        newsRepository.save(newsToDelete);
     }
 }
