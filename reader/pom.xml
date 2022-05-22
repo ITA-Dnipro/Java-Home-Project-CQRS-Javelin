@@ -157,11 +157,12 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.1</version>
                 <configuration>
                     <to>
-                        <image>reader</image>
+                        <image>homecqrs/reader</image>
                         <tags>
-                            <tag>javelin-${revision}</tag>
+                            <tag>${revision}</tag>
                         </tags>
                         <auth>
                             <username>${env.DOCKER_USERNAME}</username>
@@ -178,7 +179,7 @@
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>buildTar</goal>
+                            <goal>dockerBuild</goal>
                         </goals>
                     </execution>
                 </executions>
