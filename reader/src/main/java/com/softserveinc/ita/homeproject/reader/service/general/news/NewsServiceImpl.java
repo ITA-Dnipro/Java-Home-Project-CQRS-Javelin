@@ -82,7 +82,8 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsDto getOne(Long id) {
-        NewsDto newsDto = newsRepository.findById(ID_PREFIX + id).filter(News::getEnabled)
+        NewsDto newsDto = newsRepository.findById(ID_PREFIX + id)
+            .filter(News::getEnabled)
             .map(news -> mapper.convert(news, NewsDto.class))
             .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
 
@@ -103,7 +104,8 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public void deactivateNews(Long id) {
-        News newsToDelete = newsRepository.findById(ID_PREFIX + id).filter(News::getEnabled)
+        News newsToDelete = newsRepository.findById(ID_PREFIX + id)
+            .filter(News::getEnabled)
             .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
         newsToDelete.setEnabled(false);
 
