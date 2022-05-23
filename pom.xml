@@ -12,6 +12,8 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>open-api</module>
+        <module>gateway-spring-cloud</module>
         <module>writer</module>
         <module>writer-data-migration</module>
     </modules>
@@ -27,14 +29,14 @@
         <revision.patch>1</revision.patch>
         <ci_revision>-SNAPSHOT</ci_revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <docker.revision>latest</docker.revision>
 
         <!--Dependencies properties-->
+
         <!--Spring dependencies versioning-->
         <spring.boot.version>2.6.7</spring.boot.version>
+        <spring-cloud-starter-gateway.version>3.1.2</spring-cloud-starter-gateway.version>
         <spring-kafka.version>2.8.5</spring-kafka.version>
-
 
         <!--Other dependencies properties-->
         <assertj-core.version>3.16.1</assertj-core.version>
@@ -59,6 +61,9 @@
         <checkstyle.configLocation>
             ${maven.multiModuleProjectDirectory}/.github/checkstyle-configuration.xml
         </checkstyle.configLocation>
+        <jib.goal>dockerBuild</jib.goal>
+        <jib.version>3.2.1</jib.version>
+        <fabric8io.docker.maven.plugin.version>0.39.1</fabric8io.docker.maven.plugin.version>
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
         <openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
@@ -71,11 +76,8 @@
         <slf4j-api.version>1.7.30</slf4j-api.version>
         <reflections.version>0.9.12</reflections.version>
         <rsql-jpa.version>5.0.9</rsql-jpa.version>
-        <fabric8io.docker.maven.plugin.version>0.24.0</fabric8io.docker.maven.plugin.version>
         <jib.maven.version>2.7.1</jib.maven.version>
-        <jib.goal>dockerBuild</jib.goal>
     </properties>
-
 
     <!--Profiles section-->
 
@@ -119,7 +121,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-gateway</artifactId>
-                <version>${spring.boot.version}</version>
+                <version>${spring-cloud-starter-gateway.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
@@ -233,6 +235,11 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
@@ -355,5 +362,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
 </project>
