@@ -1,16 +1,20 @@
 package com.softserveinc.ita.homeproject.writer.api;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.Provider;
-
+import com.softserveinc.ita.homeproject.writer.mapper.model.HomeMapper;
 import com.softserveinc.ita.homeproject.writer.model.CreateNews;
 import com.softserveinc.ita.homeproject.writer.model.ReadNews;
 import com.softserveinc.ita.homeproject.writer.model.UpdateNews;
 import com.softserveinc.ita.homeproject.writer.model.dto.general.news.NewsDto;
 import com.softserveinc.ita.homeproject.writer.service.general.news.NewsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-//import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * NewsApiServiceImpl class is the inter layer between generated
@@ -19,61 +23,62 @@ import org.springframework.stereotype.Component;
  * @author Ihor Svyrydenko
  */
 
-@Provider
-@Component
-public class NewsApiImpl extends CommonApi implements NewsApi {
+@RequestMapping("/api/0")
+@RestController
+public class NewsApiImpl implements NewsApi {
 
-    private final NewsService newsService;
+    @Autowired
+    private NewsService newsService;
 
-    public NewsApiImpl(NewsService newsService) {
-        this.newsService = newsService;
-    }
+    @Autowired
+    protected HomeMapper mapper;
 
-    //    @PreAuthorize(MANAGE_NEWS)
     @Override
-    public Response createNews(CreateNews createNews) {
+    public ResponseEntity<ReadNews> createNews(CreateNews createNews) {
         NewsDto newsDto = mapper.convert(createNews, NewsDto.class);
         NewsDto createdNewsDto = newsService.create(newsDto);
         ReadNews response = mapper.convert(createdNewsDto, ReadNews.class);
-        return Response.status(Response.Status.CREATED).entity(response).build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-//    @PreAuthorize(MANAGE_NEWS)
     @Override
-    public Response deleteNews(Long id) {
+    public ResponseEntity<Void> deleteNews(Long id) {
         newsService.deactivateNews(id);
-        return Response.status(Response.Status.NO_CONTENT).build();
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-//    @PreAuthorize(READ_NEWS)
     @Override
-    public Response getAllNews(Integer pageNumber,
-                               Integer pageSize,
-                               String sort,
-                               String filter,
-                               Long id,
-                               String title,
-                               String text,
-                               String source) {
+    public ResponseEntity<List<ReadNews>> getAllNews(Integer pageNumber,
+                                                     Integer pageSize,
+                                                     String sort,
+                                                     String filter,
+                                                     Long id,
+                                                     String title,
+                                                     String text,
+                                                     String source) {
+        Page<NewsDto> readNews = newsService.findAll();
 
-        Page<NewsDto> readNews = newsService.findAll(pageNumber, pageSize, getSpecification());
-        return buildQueryResponse(readNews, ReadNews.class);
+        return ResponseEntity.status(HttpStatus.OK).body(readNews.getContent().stream()
+                .map(newsDto -> mapper.convert(newsDto, ReadNews.class))
+                .collect(Collectors.toList()));
     }
 
-//    @PreAuthorize(READ_NEWS)
     @Override
-    public Response getNews(Long id) {
+    public ResponseEntity<ReadNews> getNews(Long id) {
         NewsDto readNewsDto = newsService.getOne(id);
-        ReadNews newsApiResponse = mapper.convert(readNewsDto, ReadNews.class);
-        return Response.ok().entity(newsApiResponse).build();
+        ReadNews news = mapper.convert(readNewsDto, ReadNews.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(news);
     }
 
-//    @PreAuthorize(MANAGE_NEWS)
     @Override
-    public Response updateNews(Long id, UpdateNews updateNews) {
+    public ResponseEntity<ReadNews> updateNews(Long id, UpdateNews updateNews) {
         NewsDto updateNewsDto = mapper.convert(updateNews, NewsDto.class);
         NewsDto readNewsDto = newsService.update(id, updateNewsDto);
         ReadNews response = mapper.convert(readNewsDto, ReadNews.class);
-        return Response.ok().entity(response).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

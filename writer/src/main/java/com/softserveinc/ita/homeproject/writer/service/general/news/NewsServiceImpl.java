@@ -7,12 +7,16 @@ import com.softserveinc.ita.homeproject.writer.model.entity.general.news.News;
 import com.softserveinc.ita.homeproject.writer.repository.general.news.NewsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,8 +46,8 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public NewsDto update(Long id, NewsDto newsDto) {
         News fromDB = newsRepository.findById(id)
-            .filter(News::getEnabled)
-            .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
+                .filter(News::getEnabled)
+                .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
 
         if (newsDto.getTitle() != null) {
             fromDB.setTitle(newsDto.getTitle());
@@ -71,17 +75,31 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Page<NewsDto> findAll(Integer pageNumber, Integer pageSize, Specification<News> specification) {
-        return newsRepository.findAll(specification, PageRequest.of(pageNumber - 1, pageSize))
-            .map(news -> mapper.convert(news, NewsDto.class));
+    public Page<NewsDto> findAll() {
+        List<News> newsDto = new ArrayList<>();
+        newsRepository.findAll().forEach(newsDto::add);
+        return new PageImpl<>(newsDto.stream()
+                .filter(News::getEnabled)
+                .map(news -> mapper.convert(news, NewsDto.class))
+                .collect(Collectors.toList()));
+
     }
 
     @Override
     public void deactivateNews(Long id) {
-        News toDelete = newsRepository.findById(id).filter(News::getEnabled)
-            .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
+        News toDelete = newsRepository.findById(id)
+                .filter(News::getEnabled)
+                .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
         toDelete.setEnabled(false);
         newsRepository.save(toDelete);
+    }
+
+    @Override
+    public NewsDto getOne(Long id) {
+        News newsFromDb = newsRepository.findById(id)
+                .filter(News::getEnabled)
+                .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
+        return mapper.convert(newsFromDb, NewsDto.class);
     }
 
 }

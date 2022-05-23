@@ -40,15 +40,7 @@
 
         <!--Other dependencies properties-->
         <assertj-core.version>3.16.1</assertj-core.version>
-        <jackson-annotations.version>2.12.3</jackson-annotations.version>
-        <jackson-core.version>2.12.3</jackson-core.version>
-        <jackson-databind.version>2.12.3</jackson-databind.version>
-        <javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
-        <jersey-client.version>3.0.4</jersey-client.version>
-        <jersey-media-json-jackson.version>3.0.4</jersey-media-json-jackson.version>
-        <jersey-media-multipart.version>3.0.4</jersey-media-multipart.version>
-        <junit-jupiter-api.version>5.6.3</junit-jupiter-api.version>
-        <junit-jupiter-params.version>5.6.3</junit-jupiter-params.version>
+
         <lombok.version>1.18.22</lombok.version>
         <mockito-core.version>3.3.3</mockito-core.version>
         <modelMapper.version>2.4.4</modelMapper.version>
@@ -61,22 +53,25 @@
         <checkstyle.configLocation>
             ${maven.multiModuleProjectDirectory}/.github/checkstyle-configuration.xml
         </checkstyle.configLocation>
+        <jackson-databind-nullable.version>0.2.2</jackson-databind-nullable.version>
         <jib.goal>dockerBuild</jib.goal>
         <jib.version>3.2.1</jib.version>
+        <jib.maven.version>2.7.1</jib.maven.version>
         <fabric8io.docker.maven.plugin.version>0.39.1</fabric8io.docker.maven.plugin.version>
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
         <openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
         <swagger-codegen-maven-plugin.version>3.0.26</swagger-codegen-maven-plugin.version>
-        <swagger.ui.version>3.52.3</swagger.ui.version>
+        <liquibase.version>4.3.1</liquibase.version>
+        <picocli.version>4.6.1</picocli.version>
         <rapidoc.version>8.4.9</rapidoc.version>
         <redoc.version>2.0.0-rc.53</redoc.version>
-        <picocli.version>4.6.1</picocli.version>
-        <liquibase.version>4.3.1</liquibase.version>
-        <slf4j-api.version>1.7.30</slf4j-api.version>
         <reflections.version>0.9.12</reflections.version>
         <rsql-jpa.version>5.0.9</rsql-jpa.version>
-        <jib.maven.version>2.7.1</jib.maven.version>
+        <slf4j-api.version>1.7.30</slf4j-api.version>
+        <springfox-core.version>3.0.0</springfox-core.version>
+        <swagger.ui.version>3.52.3</swagger.ui.version>
+        <swagger-annotations.version>1.6.6</swagger-annotations.version>
     </properties>
 
     <!--Profiles section-->
@@ -223,6 +218,21 @@
                 <groupId>io.github.perplexhub</groupId>
                 <artifactId>rsql-jpa</artifactId>
                 <version>${rsql-jpa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-core</artifactId>
+                <version>${springfox-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openapitools</groupId>
+                <artifactId>jackson-databind-nullable</artifactId>
+                <version>${jackson-databind-nullable.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "sequence", sequenceName = "news_sequence")
+@SequenceGenerator(name = "sequence", sequenceName = "hibernate_sequence", allocationSize = 1)
 public class News extends BaseEntity {
 
     @Column(name = "create_date")

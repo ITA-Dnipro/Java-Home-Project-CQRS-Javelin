@@ -52,12 +52,12 @@ services:
   writer:
     image: homeacademy/writer:javelin_0.0.1-SNAPSHOT
     depends_on:
-      writer-data-migration:
+      postgres:
         condition: service_healthy
     environment:
       DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
     ports:
-      - 8080:8080
+      - 8086:8086
     networks:
       - javelin
 
