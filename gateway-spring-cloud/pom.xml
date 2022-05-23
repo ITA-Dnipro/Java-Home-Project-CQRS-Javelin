@@ -14,7 +14,7 @@
     <description>gateway-spring-cloud for Java-Home-Project-CQRS-Javelin</description>
 
     <properties>
-        <image.application.path>homeacademy/gateway-spring-cloud</image.application.path>
+        <image.application.path>homecqrs/gateway-spring-cloud</image.application.path>
     </properties>
 
     <dependencies>

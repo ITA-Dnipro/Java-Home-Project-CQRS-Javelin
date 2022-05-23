@@ -19,10 +19,8 @@
                 <constraints nullable="false"/>
             </column>
             <column name="PHOTO_URL" type="VARCHAR">
-                <constraints nullable="false"/>
             </column>
             <column name="SOURCE" type="VARCHAR">
-                <constraints nullable="false"/>
             </column>
             <column name="TEXT" type="VARCHAR">
                 <constraints nullable="false"/>
@@ -31,7 +29,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="UPDATE_DATE" type="TIMESTAMP">
-                <constraints nullable="true"/>
             </column>
             <column name="enabled" type="boolean">
                 <constraints nullable="false"/>

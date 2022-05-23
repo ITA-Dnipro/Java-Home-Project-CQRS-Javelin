@@ -28,6 +28,7 @@ services:
 
   postgres:
     image: postgres
+    container_name: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: password
@@ -45,7 +46,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    image: homeacademy/writer-data-migration:javelin_0.0.1-SNAPSHOT
+    image: homecqrs/writer-data-migration
+    container_name: writer-data-migration
     environment:
       DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?user=postgres&password=password
     ports:
@@ -54,7 +56,8 @@ services:
       - javelin
 
   writer:
-    image: homeacademy/writer:javelin_0.0.1-SNAPSHOT
+    image: homecqrs/writer
+    container_name: writer
     depends_on:
       postgres:
         condition: service_healthy
@@ -62,6 +65,42 @@ services:
       DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
     ports:
       - 8086:8086
+    networks:
+      - javelin
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - javelin
+
+  reader:
+    image: homecqrs/reader
+    container_name: reader
+    ports:
+      - 8085:8085
+    environment:
+      MONGO_DB_URI: http://host.docker.internal:27017
+    depends_on:
+      - mongo
+    networks:
+      - javelin
+
+  gateway-spring-cloud:
+    image: homeacademy/gateway-spring-cloud
+    container_name: gateway
+    #    Note that when you run app in Docker you should use host.docker.internal instead of localhost
+    environment:
+      READER_URI: http://host.docker.internal:8085
+      WRITER_URI: http://host.docker.internal:8086
+    ports:
+      - "8088:8088"
     networks:
       - javelin
 
