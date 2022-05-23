@@ -10,6 +10,7 @@ services:
       - "zookeeper_data:/bitnami"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+
   kafka:
     image: bitnami/kafka
     ports:
@@ -24,6 +25,7 @@ services:
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
     depends_on:
       - zookeeper
+
   postgres:
     image: postgres
     restart: always
@@ -38,6 +40,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+
   writer-data-migration:
     depends_on:
       postgres:
@@ -49,6 +52,7 @@ services:
       - 5001:5001
     networks:
       - javelin
+
   writer:
     image: homeacademy/writer:javelin_0.0.1-SNAPSHOT
     depends_on:
