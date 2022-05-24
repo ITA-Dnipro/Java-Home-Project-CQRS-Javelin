@@ -27,9 +27,9 @@ public class GatewaySpringCloudApplication {
     public RouteLocator getRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
             .route(r -> r.method(HttpMethod.GET)
-                .uri("http://localhost:8085/api/0/**"))
+                .uri("http://host.docker.internal:8085/api/0/**"))
             .route(r -> r.method(HttpMethod.POST, HttpMethod.PUT, HttpMethod.PATCH, HttpMethod.DELETE)
-                .uri("http://localhost:8086/api/0/**"))
+                .uri("http://host.docker.internal:8086/api/0/**"))
             .build();
     }
 }
