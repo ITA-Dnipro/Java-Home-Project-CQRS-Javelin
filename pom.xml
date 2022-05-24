@@ -279,6 +279,12 @@
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-mongodb</artifactId>
                 <version>${query-mongodb.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mongodb</groupId>
+                        <artifactId>mongo-java-driver</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.reflections</groupId>
