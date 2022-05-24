@@ -93,7 +93,7 @@ services:
       - javelin
 
   gateway-spring-cloud:
-    image: homeacademy/gateway-spring-cloud
+    image: homecqrs/gateway-spring-cloud:javelin-0.0.1-SNAPSHOT
     container_name: gateway
     #    Note that when you run app in Docker you should use host.docker.internal instead of localhost
     environment:
