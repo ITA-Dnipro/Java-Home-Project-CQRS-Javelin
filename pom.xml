@@ -53,9 +53,10 @@
         <jersey-media-json-jackson.version>3.0.4</jersey-media-json-jackson.version>
         <jersey-media-multipart.version>3.0.4</jersey-media-multipart.version>
         <junit-jupiter-api.version>5.6.3</junit-jupiter-api.version>
+        <junit-jupiter-engine.version>5.6.3</junit-jupiter-engine.version>
         <junit-jupiter-params.version>5.6.3</junit-jupiter-params.version>
         <lombok.version>1.18.22</lombok.version>
-        <mockito-core.version>3.3.3</mockito-core.version>
+        <mockito-core.version>4.5.1</mockito-core.version>
         <modelMapper.version>2.4.4</modelMapper.version>
         <postgresql.verson>42.2.16</postgresql.verson>
         <query-apt.version>5.0.0</query-apt.version>
@@ -201,6 +202,12 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>${junit-jupiter-api.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit-jupiter-engine.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
