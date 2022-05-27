@@ -1,5 +1,7 @@
 package com.softserveinc.ita.homeproject.writer.service.general.news;
 
+import static com.softserveinc.ita.homeproject.writer.Util.createBaseNews;
+import static com.softserveinc.ita.homeproject.writer.Util.createBaseNewsDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.times;
@@ -158,27 +160,5 @@ class NewsServiceImplTest {
 
         assertThat(newsService.findAll().getContent().get(0)).usingRecursiveComparison()
             .isEqualTo(newsToReturn);
-    }
-
-    private News createBaseNews() {
-        News news = new News();
-
-        news.setTitle("title");
-        news.setDescription("description");
-        news.setText("text");
-        news.setCreateDate(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS));
-        news.setEnabled(true);
-
-        return news;
-    }
-
-    private NewsDto createBaseNewsDto() {
-        NewsDto news = new NewsDto();
-
-        news.setTitle("title");
-        news.setDescription("description");
-        news.setText("text");
-
-        return news;
     }
 }
