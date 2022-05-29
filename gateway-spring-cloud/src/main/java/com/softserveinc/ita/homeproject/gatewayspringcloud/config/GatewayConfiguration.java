@@ -11,20 +11,18 @@ import org.springframework.http.HttpMethod;
 public class GatewayConfiguration {
 
     /**
-     * Used environment variable for reader service access.
-     * Example:
-     * http://localhost:8085 - for running from IDEA
-     * http://host.docker.internal:8085 - for running from Docker
+     * For services access use the same names as defined in spring.application.name property.
+     *
      * @param builder
      * @return routes with which Gateway would interact with other services
      */
     @Bean
     public RouteLocator getRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-            .route(r -> r.method(HttpMethod.GET)
-                .uri("http://host.docker.internal:8085/api/0/**"))
-            .route(r -> r.method(HttpMethod.POST, HttpMethod.PUT, HttpMethod.PATCH, HttpMethod.DELETE)
-                .uri("http://host.docker.internal:8086/api/0/**"))
+            .route("reader_service", r -> r.method(HttpMethod.GET)
+                .uri("lb://READER-SERVICE"))
+            .route("writer_service", r -> r.method(HttpMethod.POST, HttpMethod.PUT, HttpMethod.PATCH, HttpMethod.DELETE)
+                .uri("lb://WRITER-SERVICE"))
             .build();
     }
 }

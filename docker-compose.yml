@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+  eureka-discovery-service:
+    image: homecqrs/eureka-discovery-service
+    container_name: eureka-server
+    ports:
+      - "8083:8083"
+    networks:
+      - javelin
+
   zookeeper:
     image: bitnami/zookeeper
     restart: always
