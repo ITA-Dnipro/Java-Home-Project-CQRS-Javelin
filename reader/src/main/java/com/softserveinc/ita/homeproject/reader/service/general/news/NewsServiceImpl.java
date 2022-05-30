@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.softserveinc.ita.homeproject.reader.data.dto.general.news.NewsDto;
 import com.softserveinc.ita.homeproject.reader.data.entity.general.news.News;
 import com.softserveinc.ita.homeproject.reader.data.entity.general.news.NewsRepository;
 import com.softserveinc.ita.homeproject.reader.mapper.ServiceMapper;
-import com.softserveinc.ita.homeproject.reader.service.dto.general.news.NewsDto;
 import com.softserveinc.ita.homeproject.reader.service.exception.NotFoundHomeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

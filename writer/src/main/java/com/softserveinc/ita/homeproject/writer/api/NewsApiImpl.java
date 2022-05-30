@@ -1,13 +1,16 @@
 package com.softserveinc.ita.homeproject.writer.api;
 
+import com.softserveinc.ita.homeproject.writer.kafka.ProducerService;
 import com.softserveinc.ita.homeproject.writer.mapper.model.HomeMapper;
 import com.softserveinc.ita.homeproject.writer.model.CreateNews;
 import com.softserveinc.ita.homeproject.writer.model.ReadNews;
 import com.softserveinc.ita.homeproject.writer.model.UpdateNews;
+import com.softserveinc.ita.homeproject.writer.model.dto.general.news.KafkaMessageDto;
 import com.softserveinc.ita.homeproject.writer.model.dto.general.news.NewsDto;
 import com.softserveinc.ita.homeproject.writer.service.general.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +36,18 @@ public class NewsApiImpl implements NewsApi {
     @Autowired
     protected HomeMapper mapper;
 
+    @Autowired
+    private ProducerService producerService;
+
     @Override
     public ResponseEntity<ReadNews> createNews(CreateNews createNews) {
         NewsDto newsDto = mapper.convert(createNews, NewsDto.class);
         NewsDto createdNewsDto = newsService.create(newsDto);
         ReadNews response = mapper.convert(createdNewsDto, ReadNews.class);
+        KafkaMessageDto kafkaMessageDto = mapper.convert(createdNewsDto, KafkaMessageDto.class);
+        kafkaMessageDto.setMethodType(HttpMethod.POST);
+
+        producerService.produce(kafkaMessageDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -45,6 +55,10 @@ public class NewsApiImpl implements NewsApi {
     @Override
     public ResponseEntity<Void> deleteNews(Long id) {
         newsService.deactivateNews(id);
+
+        KafkaMessageDto kafkaMessageDto = new KafkaMessageDto();
+        kafkaMessageDto.setId(id);
+        kafkaMessageDto.setMethodType(HttpMethod.DELETE);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -78,6 +92,10 @@ public class NewsApiImpl implements NewsApi {
         NewsDto updateNewsDto = mapper.convert(updateNews, NewsDto.class);
         NewsDto readNewsDto = newsService.update(id, updateNewsDto);
         ReadNews response = mapper.convert(readNewsDto, ReadNews.class);
+        KafkaMessageDto kafkaMessageDto = mapper.convert(readNewsDto, KafkaMessageDto.class);
+        kafkaMessageDto.setMethodType(HttpMethod.PUT);
+
+        producerService.produce(kafkaMessageDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

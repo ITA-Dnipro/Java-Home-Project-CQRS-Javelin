@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.ws.rs.ext.Provider;
 
+import com.softserveinc.ita.homeproject.reader.data.dto.general.news.NewsDto;
 import com.softserveinc.ita.homeproject.reader.mapper.HomeMapper;
 import com.softserveinc.ita.homeproject.reader.model.CreateNews;
 import com.softserveinc.ita.homeproject.reader.model.ReadNews;
 import com.softserveinc.ita.homeproject.reader.model.UpdateNews;
-import com.softserveinc.ita.homeproject.reader.service.dto.general.news.NewsDto;
 import com.softserveinc.ita.homeproject.reader.service.general.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -4,10 +4,10 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 
 
+import com.softserveinc.ita.homeproject.reader.data.dto.BaseDto;
 import com.softserveinc.ita.homeproject.reader.data.entity.BaseEntity;
 import com.softserveinc.ita.homeproject.reader.mapper.config.AbstractTypeConverter;
 import com.softserveinc.ita.homeproject.reader.mapper.config.ServiceMappingConfig;
-import com.softserveinc.ita.homeproject.reader.service.dto.BaseDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;

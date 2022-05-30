@@ -1,6 +1,6 @@
 package com.softserveinc.ita.homeproject.reader.service.general.news;
 
-import com.softserveinc.ita.homeproject.reader.service.dto.general.news.NewsDto;
+import com.softserveinc.ita.homeproject.reader.data.dto.general.news.NewsDto;
 import org.springframework.data.domain.Page;
 
 

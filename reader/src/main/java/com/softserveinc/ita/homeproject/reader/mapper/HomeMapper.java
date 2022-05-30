@@ -1,16 +1,16 @@
 package com.softserveinc.ita.homeproject.reader.mapper;
 
-import java.util.Set;
-import javax.annotation.PostConstruct;
-
+import com.softserveinc.ita.homeproject.reader.data.dto.BaseDto;
 import com.softserveinc.ita.homeproject.reader.mapper.config.AbstractTypeConverter;
 import com.softserveinc.ita.homeproject.reader.mapper.config.HomeMappingConfig;
-import com.softserveinc.ita.homeproject.reader.service.dto.BaseDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.modelmapper.spi.ConditionalConverter;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.Set;
 
 
 @Component
@@ -23,29 +23,29 @@ public class HomeMapper {
 
     private ModelMapper modelMapper;
 
-    private final Set<HomeMappingConfig<?,?>> homeMappingConfigs;
+    private final Set<HomeMappingConfig<?, ?>> homeMappingConfigs;
 
     @PostConstruct
     @SuppressWarnings({"unchecked cast", "rawtypes"})
     public void init() {
         ConditionalConverter<Object, BaseDto> conditionalConverter =
-            new AbstractTypeConverter<>(MODEL_PACKAGE, DTO_PACKAGE, (s, d) -> {
+                new AbstractTypeConverter<>(MODEL_PACKAGE, DTO_PACKAGE, (s, d) -> {
 
-                String sourceSimpleDomainName = getSimpleDomainName(s);
-                String destinationSimpleName = d.getSimpleName();
+                    String sourceSimpleDomainName = getSimpleDomainName(s);
+                    String destinationSimpleName = d.getSimpleName();
 
-                return destinationSimpleName.contains(sourceSimpleDomainName)
-                    || sourceSimpleDomainName.contains(destinationSimpleName);
-            });
+                    return destinationSimpleName.contains(sourceSimpleDomainName)
+                            || sourceSimpleDomainName.contains(destinationSimpleName);
+                });
         ConditionalConverter<BaseDto, Object> conditionalConverter2 =
-            new AbstractTypeConverter<>(DTO_PACKAGE, MODEL_PACKAGE, (s, d) -> {
+                new AbstractTypeConverter<>(DTO_PACKAGE, MODEL_PACKAGE, (s, d) -> {
 
-                String sourceSimpleDomainName = s.getSimpleName();
-                String destinationSimpleName = getSimpleDomainName(d);
+                    String sourceSimpleDomainName = s.getSimpleName();
+                    String destinationSimpleName = getSimpleDomainName(d);
 
-                return destinationSimpleName.contains(sourceSimpleDomainName)
-                    || sourceSimpleDomainName.contains(destinationSimpleName);
-            }, (r, d) -> !r.getSubTypesOf(d).isEmpty());
+                    return destinationSimpleName.contains(sourceSimpleDomainName)
+                            || sourceSimpleDomainName.contains(destinationSimpleName);
+                }, (r, d) -> !r.getSubTypesOf(d).isEmpty());
         modelMapper = new ModelMapper();
 
         modelMapper.getConfiguration().getConverters().add(0, conditionalConverter);
