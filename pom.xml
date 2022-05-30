@@ -90,12 +90,11 @@
         <picocli.version>4.6.1</picocli.version>
         <rapidoc.version>8.4.9</rapidoc.version>
         <redoc.version>2.0.0-rc.53</redoc.version>
-        <reflections.version>0.9.12</reflections.version>
         <rsql-jpa.version>5.0.9</rsql-jpa.version>
         <slf4j-api.version>1.7.30</slf4j-api.version>
-        <springfox-core.version>3.0.0</springfox-core.version>
         <swagger.ui.version>3.52.3</swagger.ui.version>
         <swagger-annotations.version>1.6.6</swagger-annotations.version>
+        <jackson-databind.version>2.13.3</jackson-databind.version>
     </properties>
 
     <!--Profiles section-->
@@ -153,6 +152,16 @@
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-jpa</artifactId>
                 <version>${spring-data-jpa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-core</artifactId>
+                <version>${springfox-core.version}</version>
             </dependency>
 
             <!--Other dependencies -->
@@ -430,12 +439,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${maven-assembly-plugin.version}</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>com.google.cloud.tools</groupId>
-                    <artifactId>jib-maven-plugin</artifactId>
-                    <version>${jib.maven.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
