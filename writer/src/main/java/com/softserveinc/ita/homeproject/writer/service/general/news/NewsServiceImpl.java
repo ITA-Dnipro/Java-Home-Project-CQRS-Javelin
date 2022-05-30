@@ -1,5 +1,10 @@
 package com.softserveinc.ita.homeproject.writer.service.general.news;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.softserveinc.ita.homeproject.writer.exception.NotFoundHomeException;
 import com.softserveinc.ita.homeproject.writer.mapper.service.ServiceMapper;
 import com.softserveinc.ita.homeproject.writer.model.dto.general.news.NewsDto;
@@ -10,11 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -69,18 +69,20 @@ public class NewsServiceImpl implements NewsService {
 
         fromDB.setUpdateDate(LocalDateTime.now());
         newsRepository.save(fromDB);
+
         return mapper.convert(fromDB, NewsDto.class);
     }
 
     @Override
     public Page<NewsDto> findAll() {
-        List<News> newsDto = new ArrayList<>();
-        newsRepository.findAll().forEach(newsDto::add);
-        return new PageImpl<>(newsDto.stream()
-                .filter(News::getEnabled)
-                .map(news -> mapper.convert(news, NewsDto.class))
-                .collect(Collectors.toList()));
+        List<News> news = new ArrayList<>();
 
+        newsRepository.findAll().forEach(news::add);
+
+        return new PageImpl<>(news.stream()
+                .filter(News::getEnabled)
+                .map(currentNews -> mapper.convert(currentNews, NewsDto.class))
+                .collect(Collectors.toList()));
     }
 
     @Override
@@ -97,6 +99,7 @@ public class NewsServiceImpl implements NewsService {
         News newsFromDb = newsRepository.findById(id)
                 .filter(News::getEnabled)
                 .orElseThrow(() -> new NotFoundHomeException(String.format(FORMAT, NOT_FOUND_NEWS, id)));
+
         return mapper.convert(newsFromDb, NewsDto.class);
     }
 

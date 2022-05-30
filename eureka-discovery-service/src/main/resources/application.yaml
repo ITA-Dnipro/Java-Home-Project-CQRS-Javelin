@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: eureka-discovery-service
+
+server:
+  port: 8083
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    service-url:
+  # Note that when you run app locally you should use localhost instead of host.docker.internal
+      defaultZone: http://host.docker.internal:8083/eureka

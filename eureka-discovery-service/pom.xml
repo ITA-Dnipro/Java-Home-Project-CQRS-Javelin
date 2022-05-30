@@ -2,32 +2,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>home-cqrs-javelin</artifactId>
         <groupId>com.softserveinc.ita.homeproject</groupId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>gateway-spring-cloud</artifactId>
-    <name>gateway-spring-cloud</name>
-    <description>gateway-spring-cloud for Java-Home-Project-CQRS-Javelin</description>
+    <artifactId>eureka-discovery-service</artifactId>
+    <name>eureka-discovery-service</name>
+    <description>eureka-discovery-service for Java-Home-Project-CQRS-Javelin</description>
 
     <properties>
-        <image.application.path>homecqrs/gateway-spring-cloud</image.application.path>
+        <image.application.path>homecqrs/eureka-discovery-service</image.application.path>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -45,7 +44,7 @@
                         </auth>
                     </to>
                     <container>
-                        <mainClass>com.softserveinc.ita.homeproject.gatewayspringcloud.GatewaySpringCloudApplication</mainClass>
+                        <mainClass>com.softserveinc.ita.homeproject.eurekadiscoveryservice.EurekaDiscoveryServiceApplication</mainClass>
                         <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                     </container>
                     <allowInsecureRegistries>true</allowInsecureRegistries>

@@ -17,6 +17,7 @@
         <module>reader</module>
         <module>writer</module>
         <module>writer-data-migration</module>
+        <module>eureka-discovery-service</module>
     </modules>
 
     <properties>
@@ -36,26 +37,27 @@
 
         <!--Spring dependencies versioning-->
         <spring.boot.version>2.6.7</spring.boot.version>
-        <spring-cloud-starter-gateway.version>3.1.2</spring-cloud-starter-gateway.version>
+        <spring-cloud-starter.version>2021.0.2</spring-cloud-starter.version>
         <spring-kafka.version>2.8.5</spring-kafka.version>
         <spring-data-jpa.version>2.5.11</spring-data-jpa.version>
 
         <!--Other dependencies properties-->
         <assertj-core.version>3.16.1</assertj-core.version>
 
-        <jackson-annotations.version>2.12.3</jackson-annotations.version>
-        <jackson-core.version>2.12.3</jackson-core.version>
+        <jackson-annotations.version>2.12.2</jackson-annotations.version>
+        <jackson-core.version>2.12.2</jackson-core.version>
         <jackson-databind-nullable.version>0.2.2</jackson-databind-nullable.version>
-        <jackson-databind.version>2.12.3</jackson-databind.version>
+        <jackson-databind.version>2.12.2</jackson-databind.version>
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
         <javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
         <jersey-client.version>3.0.4</jersey-client.version>
         <jersey-media-json-jackson.version>3.0.4</jersey-media-json-jackson.version>
         <jersey-media-multipart.version>3.0.4</jersey-media-multipart.version>
         <junit-jupiter-api.version>5.6.3</junit-jupiter-api.version>
+        <junit-jupiter-engine.version>5.6.3</junit-jupiter-engine.version>
         <junit-jupiter-params.version>5.6.3</junit-jupiter-params.version>
         <lombok.version>1.18.22</lombok.version>
-        <mockito-core.version>3.3.3</mockito-core.version>
+        <mockito-core.version>4.5.1</mockito-core.version>
         <modelMapper.version>2.4.4</modelMapper.version>
         <postgresql.verson>42.2.16</postgresql.verson>
         <query-apt.version>5.0.0</query-apt.version>
@@ -81,6 +83,7 @@
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <maven.checkstyle.plugin.version>3.1.2</maven.checkstyle.plugin.version>
         <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
         <swagger-codegen-maven-plugin.version>3.0.26</swagger-codegen-maven-plugin.version>
         <liquibase.version>4.3.1</liquibase.version>
@@ -136,8 +139,10 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-gateway</artifactId>
-                <version>${spring-cloud-starter-gateway.version}</version>
+                <artifactId>spring-cloud-starter-parent</artifactId>
+                <version>${spring-cloud-starter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
@@ -161,6 +166,11 @@
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${validation-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-annotations.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openapitools</groupId>
@@ -201,6 +211,12 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>${junit-jupiter-api.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit-jupiter-engine.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -267,19 +283,9 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>org.reflections</groupId>
-                <artifactId>reflections</artifactId>
-                <version>${reflections.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger-annotations.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-core</artifactId>
-                <version>${springfox-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -338,6 +344,11 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.openapitools</groupId>
