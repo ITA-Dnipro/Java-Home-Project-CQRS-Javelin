@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit;
 import com.softserveinc.ita.homeproject.writer.model.CreateNews;
 import com.softserveinc.ita.homeproject.writer.model.ReadNews;
 import com.softserveinc.ita.homeproject.writer.model.UpdateNews;
+import com.softserveinc.ita.homeproject.writer.model.dto.general.news.KafkaMessageDto;
 import com.softserveinc.ita.homeproject.writer.model.dto.general.news.NewsDto;
 import com.softserveinc.ita.homeproject.writer.model.entity.general.news.News;
 
@@ -52,5 +53,14 @@ public class Util {
             .title("title")
             .description("description")
             .text("text");
+    }
+
+    public static KafkaMessageDto createBasicKafkaMessageDto() {
+         KafkaMessageDto kafkaMessageDto = new KafkaMessageDto();
+         kafkaMessageDto.setTitle("title");
+         kafkaMessageDto.setDescription("description");
+         kafkaMessageDto.setText("text");
+
+         return kafkaMessageDto;
     }
 }

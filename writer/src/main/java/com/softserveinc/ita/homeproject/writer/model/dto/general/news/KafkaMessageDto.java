@@ -1,6 +1,7 @@
 package com.softserveinc.ita.homeproject.writer.model.dto.general.news;
 
 import com.softserveinc.ita.homeproject.writer.model.dto.BaseDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpMethod;

@@ -95,6 +95,7 @@
         <swagger.ui.version>3.52.3</swagger.ui.version>
         <swagger-annotations.version>1.6.6</swagger-annotations.version>
         <jackson-databind.version>2.13.3</jackson-databind.version>
+        <byte-buddy.version>1.12.10</byte-buddy.version>
     </properties>
 
     <!--Profiles section-->
@@ -163,7 +164,11 @@
                 <artifactId>springfox-core</artifactId>
                 <version>${springfox-core.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${byte-buddy.version}</version>
+            </dependency>
             <!--Other dependencies -->
             <dependency>
                 <groupId>org.assertj</groupId>

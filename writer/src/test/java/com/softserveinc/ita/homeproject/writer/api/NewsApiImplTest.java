@@ -1,19 +1,18 @@
 package com.softserveinc.ita.homeproject.writer.api;
 
-import static com.softserveinc.ita.homeproject.writer.Util.createBaseNewsDto;
-import static com.softserveinc.ita.homeproject.writer.Util.createBasicModelForNewsCreation;
-import static com.softserveinc.ita.homeproject.writer.Util.createBasicReadNewsModel;
-import static com.softserveinc.ita.homeproject.writer.Util.createBasicUpdateNewsModel;
+import static com.softserveinc.ita.homeproject.writer.Util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import com.softserveinc.ita.homeproject.writer.kafka.ProducerService;
 import com.softserveinc.ita.homeproject.writer.mapper.model.HomeMapper;
 import com.softserveinc.ita.homeproject.writer.model.CreateNews;
 import com.softserveinc.ita.homeproject.writer.model.ReadNews;
 import com.softserveinc.ita.homeproject.writer.model.UpdateNews;
+import com.softserveinc.ita.homeproject.writer.model.dto.general.news.KafkaMessageDto;
 import com.softserveinc.ita.homeproject.writer.model.dto.general.news.NewsDto;
 import com.softserveinc.ita.homeproject.writer.service.general.news.NewsService;
 import org.junit.jupiter.api.Test;
@@ -33,6 +32,9 @@ class NewsApiImplTest {
     private NewsService newsService;
 
     @Mock
+    private ProducerService producerService;
+
+    @Mock
     private static HomeMapper mapper;
 
     @InjectMocks
@@ -43,9 +45,11 @@ class NewsApiImplTest {
         CreateNews createdNews = createBasicModelForNewsCreation();
         NewsDto createdNewsDto = createBaseNewsDto();
         ReadNews newsToReturn = createBasicReadNewsModel();
+        KafkaMessageDto kafkaMessageDto = createBasicKafkaMessageDto();
         when(mapper.convert(createdNews, NewsDto.class)).thenReturn(createdNewsDto);
         when(newsService.create(createdNewsDto)).thenReturn(createdNewsDto);
         when(mapper.convert(createdNewsDto, ReadNews.class)).thenReturn(newsToReturn);
+        when(mapper.convert(createdNewsDto, KafkaMessageDto.class)).thenReturn(kafkaMessageDto);
 
         ResponseEntity<ReadNews> response = api.createNews(createdNews);
 
@@ -94,9 +98,11 @@ class NewsApiImplTest {
         NewsDto newsDto = createBaseNewsDto();
         ReadNews newsToReturn = createBasicReadNewsModel();
         UpdateNews updatedNews = createBasicUpdateNewsModel();
+        KafkaMessageDto kafkaMessageDto = createBasicKafkaMessageDto();
         when(mapper.convert(updatedNews, NewsDto.class)).thenReturn(newsDto);
         when(newsService.update(newsId, newsDto)).thenReturn(newsDto);
         when(mapper.convert(newsDto, ReadNews.class)).thenReturn(newsToReturn);
+        when(mapper.convert(newsDto, KafkaMessageDto.class)).thenReturn(kafkaMessageDto);
 
         ResponseEntity<ReadNews> response = api.updateNews(newsId, updatedNews);
 
