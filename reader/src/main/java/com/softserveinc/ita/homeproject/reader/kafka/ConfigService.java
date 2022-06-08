@@ -21,10 +21,7 @@ public class ConfigService {
     private final ServiceMapper serviceMapper;
 
     @KafkaListener(topics = "javelin_demo")
-    public void consume(String kafkaMessage) throws Exception {
-
-        ObjectMapper mapper = new ObjectMapper();
-        KafkaMessageDto kafkaMessageDto = mapper.readValue(kafkaMessage, KafkaMessageDto.class);
+    public void consume(KafkaMessageDto kafkaMessageDto) {
 
         NewsDto newsDto = serviceMapper.convert(kafkaMessageDto, NewsDto.class);
 
