@@ -1,5 +1,6 @@
 package com.softserveinc.ita.homeproject.reader.kafka;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserveinc.ita.homeproject.reader.data.dto.general.news.KafkaMessageDto;
 import com.softserveinc.ita.homeproject.reader.data.dto.general.news.NewsDto;
@@ -21,7 +22,10 @@ public class ConfigService {
     private final ServiceMapper serviceMapper;
 
     @KafkaListener(topics = "javelin_demo")
-    public void consume(KafkaMessageDto kafkaMessageDto) {
+    public void consume(String kafkaMessageStr) throws Exception {
+
+        ObjectMapper mapper = new ObjectMapper();
+        KafkaMessageDto kafkaMessageDto = mapper.readValue(kafkaMessageStr, KafkaMessageDto.class);
 
         NewsDto newsDto = serviceMapper.convert(kafkaMessageDto, NewsDto.class);
 
